@@ -236,9 +236,15 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Bu3-74-HXf">
-                                <rect key="frame" x="50" y="50" width="62" height="35"/>
+                                <rect key="frame" x="50" y="50" width="95" height="35"/>
                                 <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="plain" title="Back"/>
+                                <buttonConfiguration key="configuration" style="plain" image="arrowshape.turn.up.left.2" catalog="system" title="Back">
+                                    <backgroundConfiguration key="background" cornerRadius="16">
+                                        <color key="backgroundColor" systemColor="systemYellowColor"/>
+                                        <color key="strokeColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </backgroundConfiguration>
+                                    <color key="baseForegroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </buttonConfiguration>
                                 <connections>
                                     <segue destination="9dE-65-yOp" kind="unwind" unwindAction="unwindActionWithUnwindSegue:" id="ySe-up-lf3"/>
                                 </connections>
@@ -306,6 +312,10 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="sRk-FH-MnW"/>
+                    <connections>
+                        <outletCollection property="buttonsCollection" destination="Siw-hC-LXQ" collectionClass="NSMutableArray" id="kmM-fC-fTF"/>
+                        <outletCollection property="buttonsCollection" destination="qIn-SZ-eb6" collectionClass="NSMutableArray" id="ydD-DC-GxT"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="W86-7W-6KW" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
                 <exit id="9dE-65-yOp" userLabel="Exit" sceneMemberID="exit"/>
@@ -314,6 +324,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="arrowshape.turn.up.left.2" catalog="system" width="128" height="86"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
