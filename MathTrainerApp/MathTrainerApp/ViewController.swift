@@ -14,7 +14,7 @@ enum MathTypes: Int {
 class ViewController: UIViewController {
     // MARK: - IBOutlets
     @IBOutlet var buttonsCollection: [UIButton]!
-    
+    @IBOutlet weak var sumLabel: UILabel!
     //MARK: - Properties
     private var selectedType: MathTypes = .add
     
@@ -23,6 +23,7 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         configureButtons()
     }
+    
     // MARK: - Actions
     @IBAction func buttonsAction(_ sender: UIButton) {
         selectedType = MathTypes(rawValue: sender.tag) ?? .add
@@ -35,7 +36,7 @@ class ViewController: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let viewController = segue.destination as? TrainViewController {
             viewController.type = selectedType
-        }
+        } 
     }
     
     private func configureButtons() {
