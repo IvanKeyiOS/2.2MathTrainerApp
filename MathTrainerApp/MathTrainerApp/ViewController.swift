@@ -18,6 +18,7 @@ class ViewController: UIViewController {
     //MARK: - Properties
     private var selectedType: MathTypes = .add
     
+    
     // MARK: - Life cycle
     override func viewDidLoad() {
         super.viewDidLoad()
