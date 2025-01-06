@@ -11,10 +11,15 @@ enum MathTypes: Int {
     case add, subtract, multiply, divide
 }
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, TrainViewControllerDelegate {
+    
     // MARK: - IBOutlets
     @IBOutlet var buttonsCollection: [UIButton]!
     @IBOutlet weak var sumLabel: UILabel!
+    @IBOutlet weak var subtractLabel: UILabel!
+    @IBOutlet weak var multiplyLabel: UILabel!
+    @IBOutlet weak var divideLabel: UILabel!
+    
     //MARK: - Properties
     private var selectedType: MathTypes = .add
     
@@ -36,7 +41,16 @@ class ViewController: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let viewController = segue.destination as? TrainViewController {
             viewController.type = selectedType
-        } 
+            
+            viewController.delegate = self
+        }
+    }
+    
+    func didReceiveData(_ add: Int, _ subtract: Int, _ multiply: Int, _ divide: Int) {
+        sumLabel.text = String(add)
+        subtractLabel.text = String(subtract)
+        multiplyLabel.text = String(multiply)
+        divideLabel.text = String(divide)
     }
     
     private func configureButtons() {

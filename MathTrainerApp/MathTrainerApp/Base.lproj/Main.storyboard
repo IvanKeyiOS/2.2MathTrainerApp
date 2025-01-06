@@ -216,6 +216,9 @@
                     </view>
                     <navigationItem key="navigationItem" id="7sh-uf-zER"/>
                     <connections>
+                        <outlet property="divideLabel" destination="fdQ-18-uR2" id="ets-SI-dqN"/>
+                        <outlet property="multiplyLabel" destination="7xH-Z8-mDO" id="Inu-Uh-yXf"/>
+                        <outlet property="subtractLabel" destination="UHS-q9-JZr" id="hQu-cO-Wa0"/>
                         <outlet property="sumLabel" destination="M8n-PV-2pO" id="cOZ-Tz-A8L"/>
                         <outletCollection property="buttonsCollection" destination="3Pu-vz-FTF" collectionClass="NSMutableArray" id="kIn-O9-00U"/>
                         <outletCollection property="buttonsCollection" destination="DTv-Tu-CfF" collectionClass="NSMutableArray" id="Psa-t2-n1n"/>
@@ -247,6 +250,7 @@
                                     <color key="baseForegroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </buttonConfiguration>
                                 <connections>
+                                    <action selector="sendDataAndDismiss" destination="HSe-CN-fC3" eventType="touchUpInside" id="iAP-KO-b51"/>
                                     <segue destination="9dE-65-yOp" kind="unwind" unwindAction="unwindActionWithUnwindSegue:" id="ySe-up-lf3"/>
                                 </connections>
                             </button>
