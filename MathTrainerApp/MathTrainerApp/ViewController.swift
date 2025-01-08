@@ -12,7 +12,6 @@ enum MathTypes: Int {
 }
 
 class ViewController: UIViewController, TrainViewControllerDelegate {
-    
     // MARK: - IBOutlets
     @IBOutlet var buttonsCollection: [UIButton]!
     @IBOutlet weak var sumLabel: UILabel!
@@ -41,7 +40,6 @@ class ViewController: UIViewController, TrainViewControllerDelegate {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let viewController = segue.destination as? TrainViewController {
             viewController.type = selectedType
-            
             viewController.delegate = self
         }
     }

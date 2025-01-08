@@ -73,9 +73,12 @@ final class TrainViewController: UIViewController {
     // MARK: - Life cycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         configureQuestionDivide()
         configureQuestion()
+        
         getCount()
+        
         configureButtons()
         calculationAnswer()
     }
