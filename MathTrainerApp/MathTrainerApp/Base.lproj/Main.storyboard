@@ -3,6 +3,7 @@
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23084"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -22,8 +23,8 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Что хотите тренировать?" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Nlp-H1-rPn">
-                                <rect key="frame" x="106.5" y="333" width="201" height="21"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="what do you want to practice?" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Nlp-H1-rPn">
+                                <rect key="frame" x="93" y="333" width="228.5" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -59,7 +60,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <color key="backgroundColor" name="Color"/>
                                 <constraints>
                                     <constraint firstAttribute="trailing" secondItem="3Pu-vz-FTF" secondAttribute="trailing" id="BFr-Md-IyX"/>
                                     <constraint firstAttribute="trailing" secondItem="M8n-PV-2pO" secondAttribute="trailing" id="JOG-5h-sj8"/>
@@ -96,12 +97,13 @@
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="-" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UHS-q9-JZr">
                                         <rect key="frame" x="0.0" y="87" width="80" height="21"/>
+                                        <color key="backgroundColor" name="Color"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <color key="backgroundColor" name="Color"/>
                                 <constraints>
                                     <constraint firstItem="DTv-Tu-CfF" firstAttribute="leading" secondItem="AFb-ti-vF4" secondAttribute="leading" id="7eL-Z6-1I0"/>
                                     <constraint firstItem="UHS-q9-JZr" firstAttribute="leading" secondItem="AFb-ti-vF4" secondAttribute="leading" id="GVH-P1-vga"/>
@@ -143,7 +145,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <color key="backgroundColor" name="Color"/>
                                 <constraints>
                                     <constraint firstAttribute="trailing" secondItem="Ith-ZI-5tA" secondAttribute="trailing" id="6oG-0e-bhe"/>
                                     <constraint firstItem="Ith-ZI-5tA" firstAttribute="top" secondItem="jx2-1W-qX0" secondAttribute="top" id="Aoz-il-1sO"/>
@@ -185,7 +187,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <color key="backgroundColor" name="Color"/>
                                 <constraints>
                                     <constraint firstAttribute="bottom" secondItem="7xH-Z8-mDO" secondAttribute="bottom" id="BkJ-AG-xJX"/>
                                     <constraint firstItem="6Vf-BJ-zxu" firstAttribute="top" secondItem="rZJ-hX-d64" secondAttribute="top" id="CD4-QO-yR7"/>
@@ -198,7 +200,7 @@
                             </view>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <color key="backgroundColor" name="Color"/>
                         <constraints>
                             <constraint firstItem="AFb-ti-vF4" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" constant="70" id="1QD-Yu-rSx"/>
                             <constraint firstItem="KGn-0E-7jI" firstAttribute="top" secondItem="Nlp-H1-rPn" secondAttribute="bottom" constant="40" id="3So-Xh-JJT"/>
@@ -216,6 +218,10 @@
                     </view>
                     <navigationItem key="navigationItem" id="7sh-uf-zER"/>
                     <connections>
+                        <outlet property="divideLabel" destination="fdQ-18-uR2" id="ets-SI-dqN"/>
+                        <outlet property="multiplyLabel" destination="7xH-Z8-mDO" id="Inu-Uh-yXf"/>
+                        <outlet property="subtractLabel" destination="UHS-q9-JZr" id="hQu-cO-Wa0"/>
+                        <outlet property="sumLabel" destination="M8n-PV-2pO" id="cOZ-Tz-A8L"/>
                         <outletCollection property="buttonsCollection" destination="3Pu-vz-FTF" collectionClass="NSMutableArray" id="kIn-O9-00U"/>
                         <outletCollection property="buttonsCollection" destination="DTv-Tu-CfF" collectionClass="NSMutableArray" id="Psa-t2-n1n"/>
                         <outletCollection property="buttonsCollection" destination="6Vf-BJ-zxu" collectionClass="NSMutableArray" id="nUd-87-N3n"/>
@@ -236,15 +242,21 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Bu3-74-HXf">
-                                <rect key="frame" x="50" y="50" width="62" height="35"/>
+                                <rect key="frame" x="50" y="50" width="95" height="35"/>
                                 <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="plain" title="Back"/>
+                                <buttonConfiguration key="configuration" style="plain" image="arrowshape.turn.up.left.2" catalog="system" title="Back">
+                                    <backgroundConfiguration key="background" cornerRadius="16">
+                                        <color key="backgroundColor" systemColor="systemYellowColor"/>
+                                        <color key="strokeColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </backgroundConfiguration>
+                                    <color key="baseForegroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </buttonConfiguration>
                                 <connections>
-                                    <segue destination="9dE-65-yOp" kind="unwind" unwindAction="unwindActionWithUnwindSegue:" id="ySe-up-lf3"/>
+                                    <action selector="sendDataAndDismiss" destination="HSe-CN-fC3" eventType="touchUpInside" id="iAP-KO-b51"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="34 + 53 =" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cjM-Fm-7ya">
-                                <rect key="frame" x="112.5" y="389" width="189" height="48"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="22 + 33 =" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cjM-Fm-7ya">
+                                <rect key="frame" x="114" y="389" width="186" height="48"/>
                                 <fontDescription key="fontDescription" type="system" weight="black" pointSize="40"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -268,6 +280,7 @@
                                 </userDefinedRuntimeAttributes>
                                 <connections>
                                     <action selector="buttonsAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="8Lf-dU-lKq"/>
+                                    <action selector="rightButtonAction:" destination="HSe-CN-fC3" eventType="touchUpInside" id="7g8-GQ-5n1"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Siw-hC-LXQ">
@@ -289,34 +302,49 @@
                                 </userDefinedRuntimeAttributes>
                                 <connections>
                                     <action selector="buttonsAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="9rT-4V-iLl"/>
+                                    <action selector="leftButtonAction:" destination="HSe-CN-fC3" eventType="touchUpInside" id="WoQ-M3-RSE"/>
                                 </connections>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Count" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nhy-Xx-FeO">
+                                <rect key="frame" x="184" y="298" width="46.5" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="Wnb-BL-dM5"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <color key="backgroundColor" name="Color"/>
                         <constraints>
                             <constraint firstItem="qIn-SZ-eb6" firstAttribute="centerX" secondItem="gxT-Hf-ruQ" secondAttribute="centerX" constant="70" id="7dB-iS-qdD"/>
                             <constraint firstItem="cjM-Fm-7ya" firstAttribute="centerY" secondItem="gxT-Hf-ruQ" secondAttribute="centerY" constant="-30" id="BCj-oK-cEL"/>
                             <constraint firstItem="Bu3-74-HXf" firstAttribute="leading" secondItem="Wnb-BL-dM5" secondAttribute="leading" constant="50" id="CJG-wG-wOR"/>
                             <constraint firstItem="cjM-Fm-7ya" firstAttribute="centerX" secondItem="gxT-Hf-ruQ" secondAttribute="centerX" id="D9X-KT-G4p"/>
+                            <constraint firstItem="nhy-Xx-FeO" firstAttribute="centerX" secondItem="gxT-Hf-ruQ" secondAttribute="centerX" id="GPi-NO-6fe"/>
                             <constraint firstItem="Siw-hC-LXQ" firstAttribute="centerX" secondItem="gxT-Hf-ruQ" secondAttribute="centerX" constant="-70" id="Ga2-wF-H0v"/>
                             <constraint firstItem="qIn-SZ-eb6" firstAttribute="centerY" secondItem="Siw-hC-LXQ" secondAttribute="centerY" id="LOE-aW-voN"/>
                             <constraint firstItem="Bu3-74-HXf" firstAttribute="top" secondItem="Wnb-BL-dM5" secondAttribute="top" constant="50" id="euN-12-lah"/>
                             <constraint firstItem="Siw-hC-LXQ" firstAttribute="top" secondItem="cjM-Fm-7ya" secondAttribute="bottom" constant="120" id="hqG-xn-3c7"/>
+                            <constraint firstItem="cjM-Fm-7ya" firstAttribute="top" secondItem="nhy-Xx-FeO" secondAttribute="bottom" constant="70" id="jRL-wb-SmJ"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="sRk-FH-MnW"/>
+                    <connections>
+                        <outlet property="countLabel" destination="nhy-Xx-FeO" id="l6X-ov-eci"/>
+                        <outlet property="leftButton" destination="Siw-hC-LXQ" id="DY8-pR-AUi"/>
+                        <outlet property="questionLabel" destination="cjM-Fm-7ya" id="ihA-Ty-T9R"/>
+                        <outlet property="rightButton" destination="qIn-SZ-eb6" id="hc5-3d-GT3"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="W86-7W-6KW" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-                <exit id="9dE-65-yOp" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="972" y="-2"/>
         </scene>
     </scenes>
     <resources>
-        <systemColor name="systemBackgroundColor">
-            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
+        <image name="arrowshape.turn.up.left.2" catalog="system" width="128" height="86"/>
+        <namedColor name="Color">
+            <color red="0.44705882352941173" green="0.70588235294117641" blue="0.95294117647058818" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+        </namedColor>
         <systemColor name="systemYellowColor">
             <color red="1" green="0.80000000000000004" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>

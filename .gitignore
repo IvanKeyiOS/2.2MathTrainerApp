@@ -1,5 +1,7 @@
-# Created by https://www.toptal.com/developers/gitignore/api/swift,swiftpackagemanager,cocoapods,objective-c,carthage
-# Edit at https://www.toptal.com/developers/gitignore?templates=swift,swiftpackagemanager,cocoapods,objective-c,carthage
+.DS_Store
+
+# Created by https://www.toptal.com/developers/gitignore/api/swift,swiftpackagemanager,objective-c,cocoapods,carthage
+# Edit at https://www.toptal.com/developers/gitignore?templates=swift,swiftpackagemanager,objective-c,cocoapods,carthage
 
 ### Carthage ###
 # Carthage
@@ -139,7 +141,8 @@ Dependencies/
 ### SwiftPackageManager ###
 Packages
 xcuserdata
-*.xcodeproj
 
 
-# End of https://www.toptal.com/developers/gitignore/api/swift,swiftpackagemanager,cocoapods,objective-c,carthage
+
+
+# End of https://www.toptal.com/developers/gitignore/api/swift,swiftpackagemanager,objective-c,cocoapods,carthage
