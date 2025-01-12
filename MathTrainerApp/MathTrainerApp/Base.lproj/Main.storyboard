@@ -3,6 +3,7 @@
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23084"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -59,7 +60,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <color key="backgroundColor" name="Color"/>
                                 <constraints>
                                     <constraint firstAttribute="trailing" secondItem="3Pu-vz-FTF" secondAttribute="trailing" id="BFr-Md-IyX"/>
                                     <constraint firstAttribute="trailing" secondItem="M8n-PV-2pO" secondAttribute="trailing" id="JOG-5h-sj8"/>
@@ -96,12 +97,13 @@
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="-" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UHS-q9-JZr">
                                         <rect key="frame" x="0.0" y="87" width="80" height="21"/>
+                                        <color key="backgroundColor" name="Color"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <color key="backgroundColor" name="Color"/>
                                 <constraints>
                                     <constraint firstItem="DTv-Tu-CfF" firstAttribute="leading" secondItem="AFb-ti-vF4" secondAttribute="leading" id="7eL-Z6-1I0"/>
                                     <constraint firstItem="UHS-q9-JZr" firstAttribute="leading" secondItem="AFb-ti-vF4" secondAttribute="leading" id="GVH-P1-vga"/>
@@ -143,7 +145,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <color key="backgroundColor" name="Color"/>
                                 <constraints>
                                     <constraint firstAttribute="trailing" secondItem="Ith-ZI-5tA" secondAttribute="trailing" id="6oG-0e-bhe"/>
                                     <constraint firstItem="Ith-ZI-5tA" firstAttribute="top" secondItem="jx2-1W-qX0" secondAttribute="top" id="Aoz-il-1sO"/>
@@ -185,7 +187,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <color key="backgroundColor" name="Color"/>
                                 <constraints>
                                     <constraint firstAttribute="bottom" secondItem="7xH-Z8-mDO" secondAttribute="bottom" id="BkJ-AG-xJX"/>
                                     <constraint firstItem="6Vf-BJ-zxu" firstAttribute="top" secondItem="rZJ-hX-d64" secondAttribute="top" id="CD4-QO-yR7"/>
@@ -198,7 +200,7 @@
                             </view>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <color key="backgroundColor" name="Color"/>
                         <constraints>
                             <constraint firstItem="AFb-ti-vF4" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" constant="70" id="1QD-Yu-rSx"/>
                             <constraint firstItem="KGn-0E-7jI" firstAttribute="top" secondItem="Nlp-H1-rPn" secondAttribute="bottom" constant="40" id="3So-Xh-JJT"/>
@@ -251,7 +253,6 @@
                                 </buttonConfiguration>
                                 <connections>
                                     <action selector="sendDataAndDismiss" destination="HSe-CN-fC3" eventType="touchUpInside" id="iAP-KO-b51"/>
-                                    <segue destination="9dE-65-yOp" kind="unwind" unwindAction="unwindActionWithUnwindSegue:" id="ySe-up-lf3"/>
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="22 + 33 =" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cjM-Fm-7ya">
@@ -312,7 +313,7 @@
                             </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="Wnb-BL-dM5"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <color key="backgroundColor" name="Color"/>
                         <constraints>
                             <constraint firstItem="qIn-SZ-eb6" firstAttribute="centerX" secondItem="gxT-Hf-ruQ" secondAttribute="centerX" constant="70" id="7dB-iS-qdD"/>
                             <constraint firstItem="cjM-Fm-7ya" firstAttribute="centerY" secondItem="gxT-Hf-ruQ" secondAttribute="centerY" constant="-30" id="BCj-oK-cEL"/>
@@ -335,16 +336,15 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="W86-7W-6KW" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-                <exit id="9dE-65-yOp" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="972" y="-2"/>
         </scene>
     </scenes>
     <resources>
         <image name="arrowshape.turn.up.left.2" catalog="system" width="128" height="86"/>
-        <systemColor name="systemBackgroundColor">
-            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
+        <namedColor name="Color">
+            <color red="0.44705882352941173" green="0.70588235294117641" blue="0.95294117647058818" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+        </namedColor>
         <systemColor name="systemYellowColor">
             <color red="1" green="0.80000000000000004" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>

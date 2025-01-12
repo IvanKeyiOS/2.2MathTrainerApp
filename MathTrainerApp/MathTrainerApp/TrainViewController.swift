@@ -6,10 +6,10 @@
 //
 
 import UIKit
-
-protocol TrainViewControllerDelegate: AnyObject {
-    func didReceiveData(_ add: Int, _ subtract: Int, _ multiply: Int, _ divide: Int)
-}
+    //MARK: - Protocol for Delegate
+//protocol TrainViewControllerDelegate: AnyObject {
+//    func didReceiveData(_ add: Int, _ subtract: Int, _ multiply: Int, _ divide: Int)
+//}
 
 final class TrainViewController: UIViewController {
     // MARK: - IBOutlets
@@ -34,14 +34,30 @@ final class TrainViewController: UIViewController {
         }
     }
     
-    weak var delegate: TrainViewControllerDelegate?
+    //MARK: - Properties for Delegate
+//    weak var delegate: TrainViewControllerDelegate?
 
     private var add: Int = 0
     private var subtract: Int = 0
     private var multiply: Int = 0
     private var divide: Int = 0
     
+    //MARK: - Callback properties
+    var onDataSend: ((String, String, String, String) -> Void)?
+    var onDataReceive: (() -> (String?, String?, String?, String?))?
+    
+    private var sendDataAdd: Int?
+    private var sendDataSubtract: Int?
+    private var sendDataMultiply: Int?
+    private var sendDataDivide: Int?
+    
+    private var receivedDataAdd: Int?
+    private var receivedDataSubtract: Int?
+    private var receivedDataMultiply: Int?
+    private var receivedDataDivide: Int?
+    
     private var isRightAnswer: Bool = true
+    
     private var countAdd: Int = 0
     private var countSubtract: Int = 0
     private var countMultiply: Int = 0
@@ -56,6 +72,8 @@ final class TrainViewController: UIViewController {
             getCount()
         }
     }
+    
+   
     
     private var answer: Int {
         switch type {
@@ -76,11 +94,17 @@ final class TrainViewController: UIViewController {
         
         configureQuestionDivide()
         configureQuestion()
-        
-        getCount()
-        
         configureButtons()
         calculationAnswer()
+                
+        //MARK: - Callback in Life cycle
+        if let receivedData = onDataReceive?() {
+            receivedDataAdd = Int(receivedData.0 ?? "") ?? 0
+            receivedDataSubtract = Int(receivedData.1 ?? "") ?? 0
+            receivedDataMultiply = Int(receivedData.2 ?? "") ?? 0
+            receivedDataDivide = Int(receivedData.3 ?? "") ?? 0
+        }
+        getCount()
     }
     
     //MARK: - IBActions
@@ -92,7 +116,19 @@ final class TrainViewController: UIViewController {
     }
     
     @IBAction func sendDataAndDismiss() {
-        delegate?.didReceiveData(add, subtract, multiply, divide)
+        
+        //MARK: - Callback received data
+        countAdd = receivedDataAdd ?? 0
+        countSubtract = receivedDataSubtract ?? 0
+        countMultiply = receivedDataMultiply ?? 0
+        countDivide = receivedDataDivide ?? 0
+        
+        
+        //MARK: - Callback send data
+        onDataSend?(String(sendDataAdd ?? 0), String(sendDataSubtract ?? 0), String(sendDataMultiply ?? 0), String(sendDataDivide ?? 0))
+        
+        //MARK: - Delegate
+//        delegate?.didReceiveData(add, subtract, multiply, divide)
         dismiss(animated: true, completion: nil)
     }
     
@@ -162,7 +198,9 @@ final class TrainViewController: UIViewController {
                 self?.configureQuestion()
                 self?.calculationAnswer()
                 self?.configureButtons()
-                self?.passCountSumToViewController()
+                
+                //MARK: Use method for Delegate
+//                self?.passCountSumToViewController()
             }
         }
     }
@@ -170,28 +208,33 @@ final class TrainViewController: UIViewController {
     private func getCount() {
         if type == MathTypes.add {
             countAdd = count
-            countLabel.text = "Ваш результат: \(String(countAdd))"
+            sendDataAdd = countAdd + (receivedDataAdd ?? 0)
+            countLabel.text = "Ваш результат: \(String(sendDataAdd ?? 0))"
         } else if type == MathTypes.subtract {
             countSubtract = count
-            countLabel.text = "Ваш результат: \(String(countSubtract))"
+            sendDataSubtract = countSubtract + (receivedDataSubtract ?? 0)
+            countLabel.text = "Ваш результат: \(String(sendDataSubtract ?? 0))"
         } else if type == MathTypes.multiply {
             countMultiply = count
-            countLabel.text = "Ваш результат: \(String(countMultiply))"
+            sendDataMultiply = countMultiply + (receivedDataMultiply ?? 0)
+            countLabel.text = "Ваш результат: \(String(sendDataMultiply ?? 0))"
         } else {
             countDivide = count
-            countLabel.text = "Ваш результат: \(String(countDivide))"
+            sendDataDivide = countDivide + (receivedDataDivide ?? 0)
+            countLabel.text = "Ваш результат: \(String(sendDataDivide ?? 0))"
         }
     }
     
-    private func passCountSumToViewController() {
-        if type == MathTypes.add {
-            add = countAdd
-        } else if type == MathTypes.subtract {
-            subtract = countSubtract
-        } else if type == MathTypes.multiply {
-            multiply = countMultiply
-        } else {
-            divide = countDivide
-        }
-    }
+    //MARK: Method for Delegate
+//    private func passCountSumToViewController() {
+//        if type == MathTypes.add {
+//            add = countAdd
+//        } else if type == MathTypes.subtract {
+//            subtract = countSubtract
+//        } else if type == MathTypes.multiply {
+//            multiply = countMultiply
+//        } else {
+//            divide = countDivide
+//        }
+//    }
 }
