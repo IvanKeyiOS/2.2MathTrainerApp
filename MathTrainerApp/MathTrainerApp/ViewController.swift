@@ -7,32 +7,54 @@
 
 import UIKit
 
-enum MathTypes: Int {
+enum MathTypes: Int, CaseIterable {
     case add, subtract, multiply, divide
+    
+    var key: String {
+        switch self {
+        case .add:
+            return "addCount"
+        case .subtract:
+            return "subtractCount"
+        case .multiply:
+            return "multiplyCount"
+        case .divide:
+            return "divideCount"
+        }
+    }
 }
     //MARK: - /*, ... */ -> For delegate
-class ViewController: UIViewController/*, TrainViewControllerDelegate*/ {
+class ViewController: UIViewController {
     // MARK: - IBOutlets
     @IBOutlet var buttonsCollection: [UIButton]!
     @IBOutlet weak var sumLabel: UILabel!
     @IBOutlet weak var subtractLabel: UILabel!
     @IBOutlet weak var multiplyLabel: UILabel!
     @IBOutlet weak var divideLabel: UILabel!
+    @IBOutlet weak var clearButton: UIButton!
+    @IBOutlet weak var recordView: UIView!
+    @IBOutlet weak var additionalResultLabel: UILabel!
+    @IBOutlet weak var subtractionResultLabel: UILabel!
+    @IBOutlet weak var multiplicationResultLabel: UILabel!
+    @IBOutlet weak var divisionResultLabel: UILabel!
     
     //MARK: - Properties
     private var selectedType: MathTypes = .add
     
     //MARK: - CALLBACK:
-    var receivedDataAdd: String?
-    var receivedDataSubtract: String?
-    var receivedDataMultiply: String?
-    var receivedDataDivide: String?
+    private var receivedDataAdd: Int = 0
+    private var receivedDataSubtract: Int = 0
+    private var receivedDataMultiply: Int = 0
+    private var receivedDataDivide: Int = 0
     
     
     // MARK: - Life cycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        configurationLabels()
         configureButtons()
+        setCountLabels()
+        configView()
     }
     
     // MARK: - Actions
@@ -41,47 +63,91 @@ class ViewController: UIViewController/*, TrainViewControllerDelegate*/ {
         performSegue(withIdentifier: "goToNext", sender: sender)
     }
     
-    @IBAction func unwindAction(unwindSegue: UIStoryboardSegue) { }
+    @IBAction func clearActionButton(_ sender: Any) {
+        MathTypes.allCases.forEach { type in
+            let key = type.key
+            UserDefaults.container?.removeObject(forKey: key)
+            
+            if receivedDataAdd != 0 || receivedDataDivide != 0 ||
+                receivedDataMultiply != 0 || receivedDataSubtract != 0 {
+                            additionalResultLabel.text = "Additional: -"
+                            divisionResultLabel.text = "Division: -"
+                            multiplicationResultLabel.text = "Multiplication: -"
+                            subtractionResultLabel.text = "Subtraction: -"
+            }
+        }
+    }
+    
+    @IBAction func unwindAction(unwindSegue: UIStoryboardSegue) {
+        setCountLabels()
+    }
     
     //MARK: - Methods
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let viewController = segue.destination as? TrainViewController {
             viewController.type = selectedType
-            //MARK: - For delegate
-            //            viewController.delegate = self
             
-            //MARK: - CALLBAACK
+    //MARK: - CALLBAACK
             viewController.onDataSend = { [weak self] add, subtract, multiply, divide in
-                self?.receivedDataAdd = add
-                self?.receivedDataSubtract = subtract
-                self?.receivedDataMultiply = multiply
-                self?.receivedDataDivide = divide
+                self?.receivedDataAdd += add
+                self?.receivedDataSubtract += subtract
+                self?.receivedDataMultiply += multiply
+                self?.receivedDataDivide += divide
                 self?.updateUI()
             }
-            viewController.onDataReceive = { [weak self] in
-                return (self?.receivedDataAdd,
-                        self?.receivedDataSubtract,
-                        self?.receivedDataMultiply,
-                        self?.receivedDataDivide)
+        }
+    }
+     
+        private func configView() {
+        recordView.layer.cornerRadius = 16
+        recordView.layer.masksToBounds = true
+    }
+    
+    private func setCountLabels() {
+        MathTypes.allCases.forEach { type in
+            let key = type.key
+            guard let count = UserDefaults.standard.object(forKey: key) as? Int else { return }
+            let stringValue = String(count)
+            
+            switch type {
+            case .add:
+                additionalResultLabel.text = stringValue
+            case .subtract:
+                subtractionResultLabel.text = stringValue
+            case .multiply:
+                multiplicationResultLabel.text = stringValue
+            case .divide:
+                divisionResultLabel.text = stringValue
             }
         }
     }
     
     //MARK: - Method fo CALLBACK
-    func updateUI() {
-        sumLabel.text = receivedDataAdd
-        subtractLabel.text = receivedDataSubtract
-        multiplyLabel.text = receivedDataMultiply
-        divideLabel.text = receivedDataDivide
+    private func updateUI() {
+        additionalResultLabel.text = String("Additional: \(receivedDataAdd)")
+        subtractionResultLabel.text = String("Subtraction: \(receivedDataSubtract)")
+        multiplicationResultLabel.text = String("Multiplication: \(receivedDataMultiply)")
+        divisionResultLabel.text = String("Division: \(receivedDataDivide)")
+        sumLabel.text = "Additional"
+        subtractLabel.text = "Subtraction"
+        divideLabel.text = "Division"
+        multiplyLabel.text = "Multiplication"
+        sumLabel.font = .italicSystemFont(ofSize: 15)
+        subtractLabel.font = .italicSystemFont(ofSize: 15)
+        divideLabel.font = .italicSystemFont(ofSize: 15)
+        multiplyLabel.font = .italicSystemFont(ofSize: 15)
     }
     
-    //MARK: Method for Delegate
-//    func didReceiveData(_ add: Int, _ subtract: Int, _ multiply: Int, _ divide: Int) {
-//        sumLabel.text = String(add)
-//        subtractLabel.text = String(subtract)
-//        multiplyLabel.text = String(multiply)
-//        divideLabel.text = String(divide)
-//    }
+    private func configurationLabels() {
+        sumLabel.text = "Additional"
+        subtractLabel.text = "Subtraction"
+        divideLabel.text = "Division"
+        multiplyLabel.text = "Multiplication"
+        sumLabel.font = .italicSystemFont(ofSize: 15)
+        subtractLabel.font = .italicSystemFont(ofSize: 15)
+        divideLabel.font = .italicSystemFont(ofSize: 15)
+        multiplyLabel.font = .italicSystemFont(ofSize: 15)
+    }
     
     private func configureButtons() {
         // MARK: Add shadow for buttons
@@ -93,4 +159,3 @@ class ViewController: UIViewController/*, TrainViewControllerDelegate*/ {
         }
     }
 }
-

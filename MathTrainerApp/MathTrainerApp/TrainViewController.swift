@@ -6,10 +6,7 @@
 //
 
 import UIKit
-    //MARK: - Protocol for Delegate
-//protocol TrainViewControllerDelegate: AnyObject {
-//    func didReceiveData(_ add: Int, _ subtract: Int, _ multiply: Int, _ divide: Int)
-//}
+import SnapKit
 
 final class TrainViewController: UIViewController {
     // MARK: - IBOutlets
@@ -17,6 +14,9 @@ final class TrainViewController: UIViewController {
     @IBOutlet weak var rightButton: UIButton!
     @IBOutlet weak var questionLabel: UILabel!
     @IBOutlet weak var countLabel: UILabel!
+    @IBOutlet weak var bottomLeftButton: UIButton!
+    @IBOutlet weak var bottomRightButton: UIButton!
+    @IBOutlet weak var wordOfAdmirationLabel: UILabel!
     
     //MARK: - Properties
     var type: MathTypes = .add {
@@ -33,36 +33,23 @@ final class TrainViewController: UIViewController {
             }
         }
     }
-    
-    //MARK: - Properties for Delegate
-//    weak var delegate: TrainViewControllerDelegate?
 
+    //MARK: - Properties for Delegate
     private var add: Int = 0
     private var subtract: Int = 0
     private var multiply: Int = 0
     private var divide: Int = 0
     
     //MARK: - Callback properties
-    var onDataSend: ((String, String, String, String) -> Void)?
-    var onDataReceive: (() -> (String?, String?, String?, String?))?
-    
+    var onDataSend: ((Int, Int, Int, Int) -> Void)?
+
     private var sendDataAdd: Int?
     private var sendDataSubtract: Int?
     private var sendDataMultiply: Int?
     private var sendDataDivide: Int?
     
-    private var receivedDataAdd: Int?
-    private var receivedDataSubtract: Int?
-    private var receivedDataMultiply: Int?
-    private var receivedDataDivide: Int?
-    
     private var isRightAnswer: Bool = true
-    
-    private var countAdd: Int = 0
-    private var countSubtract: Int = 0
-    private var countMultiply: Int = 0
-    private var countDivide: Int = 0
-    
+        
     private var firstNumber: Int = 0
     private var secondNumber: Int = 0
     
@@ -70,11 +57,33 @@ final class TrainViewController: UIViewController {
     private var count: Int = 0 {
         didSet {
             getCount()
+           
+            let numberForCount = count
+            
+            let result = switch numberForCount {
+          
+            case 10: "Amazing"
+            case 15: "Incredible"
+            case 20: "Wonderful"
+            case 25: "Brilliant"
+            case 30: "Impressive"
+            case 35: "Awesome"
+            case 40: "Superb"
+            case 45: "Stunning"
+            case 50: "Outstanding"
+            case 55: "Marvelous"
+            case 60: "Fascinating"
+            case 65: "Breathtaking"
+            default: ""
+            }
+            
+            wordOfAdmirationLabel.text = result
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
+                self?.wordOfAdmirationLabel.text = result
+            }
         }
     }
-    
-   
-    
+
     private var answer: Int {
         switch type {
         case .add:
@@ -87,26 +96,17 @@ final class TrainViewController: UIViewController {
             return firstNumber / secondNumber
         }
     }
-    
+        
     // MARK: - Life cycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         configureQuestionDivide()
         configureQuestion()
         configureButtons()
         calculationAnswer()
-                
-        //MARK: - Callback in Life cycle
-        if let receivedData = onDataReceive?() {
-            receivedDataAdd = Int(receivedData.0 ?? "") ?? 0
-            receivedDataSubtract = Int(receivedData.1 ?? "") ?? 0
-            receivedDataMultiply = Int(receivedData.2 ?? "") ?? 0
-            receivedDataDivide = Int(receivedData.3 ?? "") ?? 0
-        }
         getCount()
     }
-    
+
     //MARK: - IBActions
     @IBAction func leftButtonAction(_ sender: UIButton) {
         check(answer: sender.titleLabel?.text ?? "", for: sender)
@@ -114,32 +114,36 @@ final class TrainViewController: UIViewController {
     @IBAction func rightButtonAction(_ sender: UIButton) {
         check(answer: sender.titleLabel?.text ?? "", for: sender)
     }
-    
+
+    @IBAction func leftBottomButtonAction(_ sender: UIButton) {
+        check(answer: sender.titleLabel?.text ?? "", for: sender)
+    }
+
+    @IBAction func rightBottomButtonAction(_ sender: UIButton) {
+        check(answer: sender.titleLabel?.text ?? "", for: sender)
+    }
+
     @IBAction func sendDataAndDismiss() {
-        
-        //MARK: - Callback received data
-        countAdd = receivedDataAdd ?? 0
-        countSubtract = receivedDataSubtract ?? 0
-        countMultiply = receivedDataMultiply ?? 0
-        countDivide = receivedDataDivide ?? 0
-        
-        
         //MARK: - Callback send data
-        onDataSend?(String(sendDataAdd ?? 0), String(sendDataSubtract ?? 0), String(sendDataMultiply ?? 0), String(sendDataDivide ?? 0))
+        onDataSend?(
+        (sendDataAdd ?? 0),
+        (sendDataSubtract ?? 0),
+        (sendDataMultiply ?? 0),
+        (sendDataDivide ?? 0)
+        )
         
         //MARK: - Delegate
-//        delegate?.didReceiveData(add, subtract, multiply, divide)
         dismiss(animated: true, completion: nil)
     }
     
     //MARK: - Methods
     private func configureButtons() {
-        let buttonsArray = [leftButton, rightButton]
+        let buttonsArray = [leftButton, rightButton, bottomLeftButton, bottomRightButton]
         buttonsArray.forEach { button in
             button?.backgroundColor = .systemYellow
         }
-        
-        // MARK: - Add shadow for buttons
+
+    // MARK: - Add shadow for buttons
         buttonsArray.forEach { button in
             button?.layer.shadowColor = UIColor.red.cgColor
             button?.layer.shadowOffset = CGSize(width: 0, height: 2)
@@ -148,16 +152,34 @@ final class TrainViewController: UIViewController {
         }
     }
     
+    private func saveCount() {
+        if let count = UserDefaults.standard.object(forKey: type.key) as? Int {
+            self.count = count
+        }
+    }
+    
     private func calculationAnswer () {
-        let isRightButton = Bool.random()
+        let isRightButton = Int.random(in: 1...4)
         var randomAnswer: Int
+        var randomAnswerTwo: Int
+        var randomAnswerThree: Int
+        var randomAnswerFour: Int
         
         repeat {
             randomAnswer = Int.random(in: (answer + 8)...(answer + 9))
+            randomAnswerTwo = Int.random(in: (answer + 6)...(answer + 7))
+            randomAnswerThree = Int.random(in: (answer + 4)...(answer + 5))
+            randomAnswerFour = Int.random(in: (answer + 2)...(answer + 3))
         } while randomAnswer == answer
         
-        rightButton.setTitle(isRightButton ? String(answer) : String(randomAnswer), for: .normal)
-        leftButton.setTitle(isRightButton ? String(randomAnswer) : String(answer), for: .normal)
+        leftButton.setTitle(isRightButton == 1 ? String(answer) : String(randomAnswer),
+                            for: .normal)
+        rightButton.setTitle(isRightButton == 2 ? String(answer) : String(randomAnswerTwo),
+                            for: .normal)
+        bottomLeftButton.setTitle(isRightButton == 3 ? String(answer) : String(randomAnswerThree),
+                            for: .normal)
+        bottomRightButton.setTitle(isRightButton == 4 ? String(answer) : String(randomAnswerFour),
+                            for: .normal)
     }
     
     private func configureQuestion() {
@@ -165,8 +187,18 @@ final class TrainViewController: UIViewController {
             firstNumber = Int.random(in: 1...99)
             secondNumber = Int.random(in: 1...99)
             
-            let question: String = "\(firstNumber) \(sign) \(secondNumber) ="
+            let question: String = "\(firstNumber) \(sign) \(secondNumber) = ?"
             questionLabel.text = question
+            configForWordAdmiration()
+        }
+    }
+    
+    private func configForWordAdmiration() {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
+            self?.wordOfAdmirationLabel.text = ""
+            self?.wordOfAdmirationLabel.font = .italicSystemFont(ofSize: 70)
+            self?.wordOfAdmirationLabel.backgroundColor = .systemYellow
+            self?.wordOfAdmirationLabel.textColor = .blue
         }
     }
     
@@ -190,51 +222,40 @@ final class TrainViewController: UIViewController {
     
     private func countRightAnswer() {
         if isRightAnswer {
-            let isSecondAttempt = rightButton.backgroundColor == .red || leftButton.backgroundColor == .red
+            let isSecondAttempt = rightButton.backgroundColor == .red || leftButton.backgroundColor == .red || bottomLeftButton.backgroundColor == .red ||
+            bottomRightButton.backgroundColor == .red
             count += isSecondAttempt ? 0 : 1
+            if isSecondAttempt == true {
+                wordOfAdmirationLabel.text = ""
+            }
             
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
                 self?.configureQuestionDivide()
                 self?.configureQuestion()
                 self?.calculationAnswer()
                 self?.configureButtons()
-                
-                //MARK: Use method for Delegate
-//                self?.passCountSumToViewController()
             }
         }
     }
     
     private func getCount() {
         if type == MathTypes.add {
-            countAdd = count
-            sendDataAdd = countAdd + (receivedDataAdd ?? 0)
-            countLabel.text = "Ваш результат: \(String(sendDataAdd ?? 0))"
+            sendDataAdd = count
+            countLabel.text = "Your current score: \(String(sendDataAdd ?? 0))"
         } else if type == MathTypes.subtract {
-            countSubtract = count
-            sendDataSubtract = countSubtract + (receivedDataSubtract ?? 0)
-            countLabel.text = "Ваш результат: \(String(sendDataSubtract ?? 0))"
+            sendDataSubtract = count
+            countLabel.text = "Your current score: \(String(sendDataSubtract ?? 0))"
         } else if type == MathTypes.multiply {
-            countMultiply = count
-            sendDataMultiply = countMultiply + (receivedDataMultiply ?? 0)
-            countLabel.text = "Ваш результат: \(String(sendDataMultiply ?? 0))"
+            sendDataMultiply = count
+            countLabel.text = "Your current score: \(String(sendDataMultiply ?? 0))"
         } else {
-            countDivide = count
-            sendDataDivide = countDivide + (receivedDataDivide ?? 0)
-            countLabel.text = "Ваш результат: \(String(sendDataDivide ?? 0))"
+            sendDataDivide = count
+            countLabel.text = "Your current score: \(String(sendDataDivide ?? 0))"
         }
     }
-    
-    //MARK: Method for Delegate
-//    private func passCountSumToViewController() {
-//        if type == MathTypes.add {
-//            add = countAdd
-//        } else if type == MathTypes.subtract {
-//            subtract = countSubtract
-//        } else if type == MathTypes.multiply {
-//            multiply = countMultiply
-//        } else {
-//            divide = countDivide
-//        }
-//    }
+}
+
+//MARK: Create storage
+extension UserDefaults {
+    static let container = UserDefaults(suiteName: "conteiner")
 }
